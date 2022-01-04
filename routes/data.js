@@ -90,17 +90,19 @@ router.post('/login', (req, res, next) => {
 
 
 router.post('/updatemember', (req, res) => {
-
-    var memberdataforupdate = req.body;
-    membership.updateOne({ _id: memberdataforupdate.userId }, { $set: memberdataforupdate }).then(updatedmembers => {
-        if (updatedmembers) {
-
-            res.send({ success: true, })
-
-        }
-        else {
-            res.send({ success: false, error: "data not updated" })
-        }
+    membership.findOne({ _id: req.body.userID }).then(member => {
+        var user = member;
+        user['status'] = 'approved';
+        membership.updateOne({ _id: req.body.userID }, { $set: user }).then(updated => {
+            if (updated) {
+                res.send({ success: true, })
+            }
+            else {
+                res.send({ success: false, error: "data not updated" })
+            }
+        }).catch(err => {
+            res.send({ success: false, error: "Something Bad Happened!" })
+        })
     }).catch(err => {
         res.send({ success: false, error: "Something Bad Happened!" })
     })
