@@ -56,6 +56,9 @@ const membershipSchema = new mongoose.Schema({
     },
     status:{
         type:String
+    },
+    bloodgroup:{
+        type:String
     }
   
     
