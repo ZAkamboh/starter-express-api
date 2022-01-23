@@ -65,11 +65,13 @@ app.use(express.json());
 
 
 
-mongoose.connect("mongodb+srv://kambohwelfareanjumankarachi:kambohwelfareanjumankarachi1818@cluster0.djol0.mongodb.net/myFirstDatabase?retryWrites=true&w=majority").then(() => {
+mongoose.connect("mongodb+srv://kamboh:1818@cluster0.denv1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority").then(() => {
     console.log("successfully connect database");
 }).catch(()=>{
     console.log("error in connecting database")
 })
+
+
 
 
 

@@ -63,7 +63,20 @@ const Mydonation = new mongoose.Schema({
 
     amount:{
         type:String
+    },
+
+    transactionid:{
+        type:String
+    },
+
+    purpose:{
+        type:String
+    },
+    donationStatus:{
+        type:String
     }
+
+
   
     
 })
