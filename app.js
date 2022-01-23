@@ -29,7 +29,7 @@ const mongoose = require('mongoose');
 //         if(responseData.messages[0]['status'] === "0") {
 //             console.log("Message sent successfully.");
 //         } else {
-//             console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
+//             console.log('message failed)
 //         }
 //     }
 // })
