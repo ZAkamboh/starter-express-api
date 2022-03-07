@@ -74,6 +74,13 @@ const Mydonation = new mongoose.Schema({
     },
     donationStatus:{
         type:String
+    },
+    comment:{
+        type:String
+    },
+    
+    resgistrationfees:{
+        type:String
     }
 
 
