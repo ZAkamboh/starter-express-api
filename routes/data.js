@@ -282,6 +282,108 @@ router.post('/login', (req, res, next) => {
     })
 })
 
+router.post('/generatecode', (req, res, next) => {
+
+    var mobile = req.body.mobile;
+    var code = req.body.code;
+
+  
+
+
+    membership.findOne({ mobile: mobile }).then(member => {
+        if (!member) {
+            res.send({ success: false, error: "I think you enter wrong Mobile number" })
+
+        }
+
+        else {
+            smsContacts = [
+                member.mobile
+            ]
+
+
+            smsContacts.forEach(contact => {
+                sendSMS(contact, `kamboh welfare anjuman kararchi Password Reset Code is : ${code}. From kamboh welfare anjuman kararchi`)
+            });
+            res.send({ success: true, })
+          
+        }
+
+
+
+
+    }).catch(err => {
+        res.send({ success: false, error: "Something Bad Happened!" })
+    })
+
+
+
+
+
+})
+
+router.post('/forgot', (req, res, next) => {
+
+    var password = req.body.password;
+    var mobile = req.body.mobile;
+
+
+
+    membership.findOne({ mobile: mobile }).then(member => {
+        if (!member) {
+            res.send({ success: false, error: "password not updated. I think you enter wrong Mobile number" })
+
+        }
+
+        else {
+            var user = member;
+
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) return err;
+                    password = hash;
+                    user['password'] = password;
+
+                    membership.updateOne({ mobile: mobile }, { $set: user }).then(updated => {
+                        if (updated) {
+                            res.send({ success: true, })
+
+                            smsContacts = [
+                                user.mobile
+                            ]
+
+
+                            smsContacts.forEach(contact => {
+                                sendSMS(contact, 'ap ka password successfully update kr dia gya ha. From kamboh welfare anjuman kararchi')
+                            });
+
+
+                        }
+                        else {
+                            res.send({ success: false, error: "password not updated. I think you enter wrong number" })
+                        }
+                    }).catch(err => {
+                        res.send({ success: false, error: "Something Bad Happened!" })
+                    })
+
+
+                });
+            });
+        }
+
+
+
+
+    }).catch(err => {
+        res.send({ success: false, error: "Something Bad Happened!" })
+    })
+
+
+
+
+
+})
+
 
 
 
@@ -808,7 +910,7 @@ router.post('/sendmessage', (req, res) => {
 
     if (allcontacts) {
 
-        res.send({success:true})
+        res.send({ success: true })
 
         smsContacts =
             req.body.allemailcontacts;
@@ -821,11 +923,11 @@ router.post('/sendmessage', (req, res) => {
     }
 
     else {
-        
-        res.send({success:true})
-        smsContacts = 
+
+        res.send({ success: true })
+        smsContacts =
             req.body.contacts
-        
+
 
         smsContacts.forEach(contact => {
             sendSMS(contact, `Alert Message Dear ${req.body.writemessagetext}.From kamboh welfare anjuman karachi`)
