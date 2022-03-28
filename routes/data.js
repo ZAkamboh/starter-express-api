@@ -77,17 +77,55 @@ function reminderMonthlymembershipFees() {
 };
 
 
-// setInterval(() => {
-//     if (todayDate === 27 ) {
-//         reminderMonthlymembershipFees();
-//     }
-// }, 20000)
+
+setInterval(() => {
+    if (todayDate === 1) {
+        reminderMonthlymembershipFees();
+    }
+}, 86400000)
+
+
+
+
+
+function reminderMonthlymembershipFees2() {
+    membership.find().then(users => {
+        users.forEach(user => {
+
+
+            if (user.paidmembershipfees < 0 && user.status === "approved") {
+
+
+                smsContacts = [
+                    user.mobile
+                ]
+
+
+                smsContacts.forEach(contact => {
+                    sendSMS(contact, `Dear ${user.firstname} ap ki monthly membership fees 0 sy bhi km ho kr - ma chali gyi ha mehrbani farma kr apni pichli or is mahiney ki membership fees jama krwayen.From Kamboh welfare anjuman karachi`)
+                });
+
+                console.log("Reminder -msg successfuly send to member")
+
+            }
+            else {
+
+
+            }
+
+
+        });
+
+    }).catch(err => {
+        console.log("Data not updated")
+    })
+};
 
 
 
 setInterval(() => {
-    if (todayDate === 3) {
-        reminderMonthlymembershipFees();
+    if (todayDate === 1) {
+        reminderMonthlymembershipFees2();
     }
 }, 86400000)
 
@@ -169,16 +207,6 @@ function Accountdeactivate() {
         console.log("Data not updated")
     })
 };
-
-
-
-
-
-// setInterval(() => {
-//     if (todayDate === 1) {
-//         Accountdeactivate();
-//     }
-// }, 20000)
 
 
 
