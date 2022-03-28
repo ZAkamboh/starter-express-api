@@ -257,7 +257,8 @@ router.post('/signup', (req, res, next) => {
                 paidmembershipfeestransactionid: req.body.paidmembershipfeestransactionid,
                 paidmembershipfeesdate: req.body.paidmembershipfeesdate,
                 paidmembershipfeesstatus: req.body.paidmembershipfeesstatus,
-                registrationfees: req.body.registrationfees
+                registrationfees: req.body.registrationfees,
+                city:req.body.city
             });
 
             bcrypt.genSalt(10, (err, salt) => {

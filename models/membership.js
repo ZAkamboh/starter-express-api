@@ -40,6 +40,10 @@ const membershipSchema = new mongoose.Schema({
     area: {
         type: String
     },
+    city: {
+        type: String
+    },
+    
     email: {
         type: String
     },
